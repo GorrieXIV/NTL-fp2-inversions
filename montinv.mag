@@ -1,0 +1,80 @@
+/////////////////////////////
+// Almost Montgomery inversion
+// Base field
+/////////////////////////////
+
+// Notation following Savas-Koc
+moninv_phasei := function(a,p)
+    u := p; 
+    v := a; 
+    r := 0;
+    s := 1;
+    k := 0;
+
+    while v gt 0 do
+        if IsEven(u) then
+            u := ShiftRight(u,1);
+            s := 2*s;
+        elif IsEven(v) then
+            v := ShiftRight(v,1);
+            r := 2*r;
+        elif u gt v then
+            u := ShiftRight(u-v,1);
+            r := r+s;
+            s := 2*s;
+        elif v ge u then
+            v := ShiftRight(v-u,1);
+            s := s+r;
+            r := 2*r;
+        end if;
+        k +:= 1;
+    end while;
+
+    if r ge p then
+        r -:= p;
+    end if;
+
+    r := p-r;
+
+    return r, k;
+end function;
+
+moninv_phaseii := function(r,p,k,n)
+    
+    for i in [1..k-n] do
+        if r mod 2 eq 0 then
+            r := ShiftRight(r,1);
+        else
+            r := ShiftRight(r+p,1);
+        end if;
+    end for;
+
+    return r;
+end function;
+
+moninv := function(a,p,n)
+    r,k := moninv_phasei(a,p);
+    x := moninv_phaseii(r,p,k,n);
+
+    return x;
+end function;
+
+/////////////////////////////
+// Montgomery inversion
+// Quadratic extension field
+/////////////////////////////
+
+fp2_inv := function(a,p,n)
+    a0 := Eltseq(a)[1]; // Re
+    a1 := Eltseq(a)[2]; // Im
+	
+		C<i> := ComplexField(20);		
+		
+    num := (C ! Integers() ! a0) - i*(C ! Integers() ! a1);
+    den := a0^2+a1^2;
+    den := GF(p)!(moninv(Integers()!den,p,n));
+
+    return num*(C ! Integers() ! den);
+end function;
+
+

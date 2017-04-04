@@ -1,0 +1,5 @@
+p:=23;
+Fp:=GF(p);
+Fp2<x>:=ExtensionField<Fp,x|x^2+1>;
+y := Fp2![5*x+3];
+y^2;

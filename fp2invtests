@@ -1,0 +1,35 @@
+//test 1:
+p := 7;
+Fp := GF(p);
+a := [Fp! 2, Fp! 6];
+n := 2;
+//fp2_inv: 10, -30i (3, 5)
+//montinv: 5, 1
+//actual: 3, 2
+
+//test 2:
+p := 11;
+Fp := GF(p);
+a := [Fp! 4, Fp! 1];
+n := 2;
+//fp2_inv: 32, -8i (10, 8)
+//montinv: 6, 7
+//actual: 2, 6
+
+//test 3:
+p := 11;
+Fp := GF(p);
+a := [Fp! 9, Fp! 5];
+n := 2;
+//fp2_inv: 90, -50i (2, 6)
+//montinv: 6, 7
+//actual: 8, 2
+
+//test 4:
+p := 17;
+Fp := GF(p);
+a := [Fp! 124, Fp! 64];
+n := 2;
+//fp2_inv: 15, -39i (15, 5)
+//montinv: 1, 6
+//actual: 1, 6

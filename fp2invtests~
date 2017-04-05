@@ -1,0 +1,55 @@
+//test 1:
+p := 7;
+Fp := GF(p);
+a := [Fp! 2, Fp! 6];
+n := 2;
+//fp2_inv: 10, -30i (3, 5)
+//montinv: 5, 1
+//actual: 3, 2
+
+//test 2:
+p := 11;
+Fp := GF(p);
+a := [Fp! 4, Fp! 1];
+n := 2;
+//fp2_inv: 32, -8i (10, 8)
+//montinv: 6, 7
+//actual: 2, 6
+
+//test 3:
+p := 11;
+Fp := GF(p);
+a := [Fp! 9, Fp! 5];
+n := 2;
+//fp2_inv: 90, -50i (2, 6)
+//montinv: 6, 7
+//actual: 8, 2
+
+//test 4:
+p := 17;
+Fp := GF(p);
+a := [Fp! 124, Fp! 64];
+n := 2;
+//fp2_inv: 15, -39i (15, 5)
+//montinv: 1, 6
+//actual: 1, 6
+
+
+
+//batch benchmark test
+//modulus size 32
+////batch size 10
+Batched Inversion Execution Time: 0.139938
+Partial (ZZ_p) Batched Inversion Execution Time: 0.065825
+Unbatched Inversion Execution Time: 0.0740278
+////batch size 100
+Batched Inversion Execution Time: 1.28642
+Partial (ZZ_p) Batched Inversion Execution Time: 0.643949
+Unbatched Inversion Execution Time: 0.765498
+////batch size 1000
+Batched Inversion Execution Time: 13.9339
+Partial (ZZ_p) Batched Inversion Execution Time: 7.20977
+Unbatched Inversion Execution Time: 7.63373
+
+//modulus size 64
+////

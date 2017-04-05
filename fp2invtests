@@ -33,3 +33,45 @@ n := 2;
 //fp2_inv: 15, -39i (15, 5)
 //montinv: 1, 6
 //actual: 1, 6
+
+
+
+//batch benchmark test
+//modulus size 32
+////batch size 10
+Batched Inversion Execution Time: 0.139938
+Partial (ZZ_p) Batched Inversion Execution Time: 0.065825
+Unbatched Inversion Execution Time: 0.0740278
+////batch size 100
+Batched Inversion Execution Time: 1.28642
+Partial (ZZ_p) Batched Inversion Execution Time: 0.643949
+Unbatched Inversion Execution Time: 0.765498
+////batch size 1000
+Batched Inversion Execution Time: 13.9339
+Partial (ZZ_p) Batched Inversion Execution Time: 7.20977
+Unbatched Inversion Execution Time: 7.63373
+
+//modulus size 64
+////batch size 10
+Batched Inversion Execution Time: 0.15583
+Partial (ZZ_p) Batched Inversion Execution Time: 0.0597491
+Unbatched Inversion Execution Time: 0.0779209
+////batch size 100
+Batched Inversion Execution Time: 1.18674
+Partial (ZZ_p) Batched Inversion Execution Time: 0.533381
+Unbatched Inversion Execution Time: 0.686652
+////batch size 1000
+Batched Inversion Execution Time: 11.8908
+Partial (ZZ_p) Batched Inversion Execution Time: 5.87891
+Unbatched Inversion Execution Time: 6.90372
+
+//modulus size 128
+////batch size 10
+Batched Inversion Execution Time: 0.136694
+Partial (ZZ_p) Batched Inversion Execution Time: 0.065207
+Unbatched Inversion Execution Time: 0.0884778
+////batchsize 100
+Batched Inversion Execution Time: 1.36194
+Partial (ZZ_p) Batched Inversion Execution Time: 0.612936
+Unbatched Inversion Execution Time: 0.924838
+

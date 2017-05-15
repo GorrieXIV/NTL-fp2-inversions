@@ -83,6 +83,51 @@ Vec<FP2> partial_mont_n_way (Vec<FP2> vec, int n, ZZ p) {
 	return vec;
 }
 
+//the following function belongs here only temporarily
+//it is to be moved, when closer to completion, to PQC-SIDH
+
+//assigns dest[0 ..n]
+void fp2nwayinv751_mont(f2elm_t* vec, f2elm_t* dest, int n)
+{// GF(p751^2) n-way partial-inversion
+
+	//f2elm_t -> felm_t	
+	felm_t t0[n]; //t0.SetLength(n);
+	felm_t t1[n]; //t1.SetLength(n);
+	felm_t den[n]; //den.SetLength(n);
+
+	for (int i = 0; i < n; i++) {
+		fpsqr751_mont((vec[i])[0], t0[i]); //t0[i] = a[i][0]^2
+		fpsqr751_mont((vec[i])[1], t1[i]); //t1[i] = a[i][1]^2
+		mp_add751(t0[i], t1[i], den[i]);//den[i] = t0[i] + t1[i];
+	}
+
+	//batched ZZ_p inversion
+	felm_t a[n]; //a.SetLength(n);
+	
+	a[0] = den[0];
+	for (int i = 1; i < n; i++) {
+		fpmul751_mont(a[i-1], den[i], a[i]); //a[i] = a[i-1] * den[i];
+	}
+
+	felm_t a_inv; // = inv(a[n-1]);
+	unsigned int* k;
+	fpinv751_mont_bingcd_partial(a[n-1], a_inv, k);
+	//note: what are all the differences between functions 386, 445, 357, and 218?
+
+	for (int i = n - 1; i >= 1; i--) {	
+		fpmul751_mont(a_inv, a[i-1], a[i]); //a[i] = a_inv * a[i-1];
+		fpmul751_mont(a[i], a_inv, a_inv); //a_inv = a_inv * den[i];
+  }
+
+	a[0] = a_inv;
+
+	//ZZ_p -> FP2
+	for (int i = 0; i < n; i++) {
+		fpmul751_mont(a[i], (vec[i])[0], (dest[i])[0]); //dest[i][0] = vec[i][0]*a[i];
+		fpmul751_mont(a[i], -(vec[i])[1], (dest[i])[1]); //dest[i][1] = -vec[i][1]*a[i];
+	}
+}
+
 //--------------------------------
 void monInvPhaseA (ZZ* r, ZZ* k, ZZ a, ZZ p) {
 	printf("monInvPhaseA called... \n"); //comment out print statements when benchmarking monInv
